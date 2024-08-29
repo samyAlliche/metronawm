@@ -80,5 +80,66 @@ const stopMetronome = () => {
   tickCount = 0;
 };
 
+// INCREASE AND DECREASE BPM
+
+let increaseInterval, decreaseInterval;
+let increaseSpeed = 500; // Start interval at 500ms
+let decreaseSpeed = 500;
+let minInterval = 50; // The minimum interval time
+
+document
+  .getElementById("increaseBpm")
+  .addEventListener("mousedown", function () {
+    increaseBpm();
+    increaseInterval = setInterval(function () {
+      increaseBpm();
+      if (increaseSpeed > minInterval) {
+        increaseSpeed -= 50;
+        clearInterval(increaseInterval);
+        increaseInterval = setInterval(arguments.callee, increaseSpeed);
+      }
+    }, increaseSpeed);
+  });
+
+document.getElementById("increaseBpm").addEventListener("mouseup", function () {
+  clearInterval(increaseInterval);
+  increaseSpeed = 500;
+});
+
+document
+  .getElementById("decreaseBpm")
+  .addEventListener("mousedown", function () {
+    decreaseBpm();
+    decreaseInterval = setInterval(function () {
+      decreaseBpm();
+      if (decreaseSpeed > minInterval) {
+        decreaseSpeed -= 50; // Accelerate by reducing the interval
+        clearInterval(decreaseInterval);
+        decreaseInterval = setInterval(arguments.callee, decreaseSpeed);
+      }
+    }, decreaseSpeed);
+  });
+
+document.getElementById("decreaseBpm").addEventListener("mouseup", function () {
+  clearInterval(decreaseInterval);
+  decreaseSpeed = 500; // Reset speed
+});
+
+const increaseBpm = () => {
+  let input = document.getElementById("bpmInput");
+  if (parseInt(input.value) < parseInt(input.max)) {
+    input.value = parseInt(input.value) + 1;
+  }
+};
+
+const decreaseBpm = () => {
+  let input = document.getElementById("bpmInput");
+  if (parseInt(input.value) > parseInt(input.min)) {
+    input.value = parseInt(input.value) - 1;
+  }
+};
+
+//START & STOP METRONOME
+
 startButton.addEventListener("click", startMetronome);
 stopButton.addEventListener("click", stopMetronome);
