@@ -1,4 +1,4 @@
-async function setRandomBackground() {
+const setRandomBackground = async () => {
   try {
     const response = await fetch("/api/random-image");
     const data = await response.json();
@@ -12,9 +12,9 @@ async function setRandomBackground() {
     };
   } catch (error) {
     console.error("Error fetching image:", error);
+    document.body.style.backgroundColor = "#3a170d";
   }
-}
-window.onload = setRandomBackground;
+};
 
 const bpmInput = document.getElementById("bpmInput");
 const startButton = document.getElementById("startButton");
@@ -37,9 +37,6 @@ const playTickSound = () => {
 
   if (tickSoundId === 2) {
     const audio = new Audio("./sounds/hat.wav");
-    const audioLower = audio.cloneNode();
-    audioLower.playbackRate = p;
-
     audio.play();
   } else if (tickSoundId === 3) {
     const audio = new Audio("./sounds/rim.wav");
@@ -62,6 +59,22 @@ const playTickSound = () => {
   tickCount++;
 };
 
+let activeDot = 0; // Track the active dot
+
+const updateDots = () => {
+  // Remove 'glow' class from all dots
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById(`dot${i}`).classList.remove("glow");
+    document.getElementById(`dot${i}`).classList.remove("bg-red-700");
+  }
+  // Add 'glow' class to the current dot
+  document
+    .getElementById(`dot${activeDot + 1}`)
+    .classList.add("glow", "bg-red-700");
+  // Update the active dot index
+  activeDot = (activeDot + 1) % 4;
+};
+
 const startMetronome = () => {
   const bpm = parseInt(bpmInput.value);
 
@@ -72,8 +85,14 @@ const startMetronome = () => {
 
   const interval = 60000 / bpm;
 
-  playTickSound(); // Play initial tick immediately
-  intervalId = setInterval(playTickSound, interval);
+  // Play initial tick and update dots immediately
+  playTickSound();
+  updateDots(); // Ensure dots update on start
+
+  intervalId = setInterval(() => {
+    playTickSound();
+    updateDots();
+  }, interval);
 
   startButton.disabled = true;
   startButton.classList.add(
@@ -90,6 +109,11 @@ const stopMetronome = () => {
     "cursor-not-allowed"
   );
   tickCount = 0;
+  // Reset all dots to non-glowing state
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById(`dot${i}`).classList.remove("glow");
+  }
+  activeDot = 0;
 };
 
 const changeSound = () => {
@@ -97,6 +121,7 @@ const changeSound = () => {
   else tickSoundId++;
 
   changeSoundInput.value = tickSoundId;
+  saveSettings();
 };
 
 // INCREASE AND DECREASE BPM
@@ -159,6 +184,37 @@ const decreaseBpm = () => {
     input.value = parseInt(input.value) - 1;
   }
 };
+
+// LocalStorage
+const saveSettings = () => {
+  const bpm = bpmInput.value;
+  const soundId = tickSoundId;
+  localStorage.setItem("bpm", bpm);
+  localStorage.setItem("tickSoundId", soundId);
+};
+
+// Call saveSettings whenever BPM or sound changes
+bpmInput.addEventListener("change", saveSettings);
+document.getElementById("changeSound").addEventListener("click", saveSettings);
+
+const loadSettings = () => {
+  const savedBpm = localStorage.getItem("bpm");
+  const savedSoundId = localStorage.getItem("tickSoundId");
+
+  if (savedBpm) {
+    bpmInput.value = savedBpm;
+  }
+  if (savedSoundId) {
+    tickSoundId = parseInt(savedSoundId, 10);
+    document.getElementById("tickSound").value = tickSoundId;
+  }
+};
+
+// Load settings when the page loads
+window.addEventListener("load", () => {
+  setRandomBackground(); // Ensure this is called before loading settings
+  loadSettings();
+});
 
 //START & STOP METRONOME
 
