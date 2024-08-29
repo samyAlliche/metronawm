@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         "ds-digital": ['"DS-Digital"', "sans-serif"],
+        "inter-tight": ['"Inter Tight"', "sans-serif"],
       },
       dropShadow: {
         glow: [
