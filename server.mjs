@@ -12,9 +12,9 @@ const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 app.get("/api/random-image", async (req, res) => {
   try {
     const topicId = "film";
-    const collectionId = "948920";
+    //const collectionId = "948920";
     const response = await fetch(
-      `https://api.unsplash.com/photos/random?client_id=${UNSPLASH_ACCESS_KEY}&orientation=landscape&topics=${topicId}&collections=${collectionId}`
+      `https://api.unsplash.com/photos/random?client_id=${UNSPLASH_ACCESS_KEY}&orientation=landscape&topics=${topicId}`
     );
     const data = await response.json();
     res.json({ imageUrl: data.urls.regular });

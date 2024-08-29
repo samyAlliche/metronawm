@@ -10,6 +10,7 @@ module.exports = {
       fontFamily: {
         "ds-digital": ['"DS-Digital"', "sans-serif"],
         "inter-tight": ['"Inter Tight"', "sans-serif"],
+        "climate-crisis": ['"Climate Crisis"', "sans-serif"],
       },
       dropShadow: {
         glow: [

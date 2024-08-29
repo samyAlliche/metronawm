@@ -64,13 +64,19 @@ const startMetronome = () => {
   intervalId = setInterval(playTickSound, interval);
 
   startButton.disabled = true;
-  startButton.classList.add("opacity-50", "cursor-not-allowed");
+  startButton.classList.add(
+    "shadow-[inset_2px_2px_6px_rgba(0,0,0,0.8)]",
+    "cursor-not-allowed"
+  );
 };
 
 const stopMetronome = () => {
   clearInterval(intervalId);
   startButton.disabled = false;
-  startButton.classList.remove("opacity-50", "cursor-not-allowed");
+  startButton.classList.remove(
+    "shadow-[inset_2px_2px_6px_rgba(0,0,0,0.8)]",
+    "cursor-not-allowed"
+  );
   tickCount = 0;
 };
 

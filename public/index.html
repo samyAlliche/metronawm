@@ -10,17 +10,68 @@
       href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@1,700&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Climate+Crisis:YEAR@1990&display=swap"
+      rel="stylesheet"
+    />
     <link href="./dist/output.css" rel="stylesheet" />
     <title>metronoMe</title>
   </head>
 
   <body
-    class="text-gray-950 flex items-center justify-center bg-cover bg-center bg-no-repeat backdrop-blur-lg h-screen"
+    class="text-gray-950 flex items-center bg-cover bg-center bg-no-repeat backdrop-blur-lg h-screen"
   >
-    <div class="container mx-auto rounded-xl border p-10 w-1/3 bg-slate-100">
-      <div></div>
+    <div
+      class="container relative mx-auto rounded-xl border p-8 w-1/3 bg-stone-200"
+    >
+      <!-- Left Speaker -->
+      <div
+        class="absolute left-[15px] top-1/2 transform -translate-y-1/2 flex flex-col gap-2"
+      >
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+      </div>
+      <div
+        class="absolute left-[25px] top-1/2 transform -translate-y-1/2 flex flex-col gap-2"
+      >
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+      </div>
+      <div
+        class="absolute left-[35px] top-1/2 transform -translate-y-1/2 flex flex-col gap-2"
+      >
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+      </div>
+
+      <!-- Right Speaker -->
+      <div
+        class="absolute right-[15px] top-1/2 transform -translate-y-1/2 flex flex-col gap-2"
+      >
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+      </div>
+      <div
+        class="absolute right-[25px] top-1/2 transform -translate-y-1/2 flex flex-col gap-2"
+      >
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+      </div>
+      <div
+        class="absolute right-[35px] top-1/2 transform -translate-y-1/2 flex flex-col gap-2"
+      >
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+        <div class="w-1 h-1 bg-gray-900 rounded-full shadow-md"></div>
+      </div>
+
       <div class="flex flex-col gap-4">
-        <h1 class="text-4xl font-inter-tight text-center">metronawMe</h1>
+        <div class="flex gap-2 items-center select-none">
+          <h1 class="text-2xl font-climate-crisis">TWX</h1>
+          <span class="font-inter-tight">MT-01</span>
+        </div>
+
         <div
           class="container mx-auto text-center flex flex-col gap-2 items-center"
         >
@@ -32,30 +83,29 @@
               type="number"
               placeholder="Enter BPM"
               min="10"
-              max="777"
+              max="360"
               value="90"
               class="p-2 border-0 outline-0 placeholder-red-700 text-center bg-gray-950 w-1/2"
             />
-            <span class="">BPM</span>
+            <span class="select-none">BPM</span>
           </div>
 
-          <div class="">
+          <div class="flex gap-2">
             <button
               id="startButton"
-              class="bg-gray-800 text-white px-4 py-2 rounded"
+              class="bg-gray-800 text-white px-4 py-2 rounded border border-gray-600 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.6),_2px_2px_4px_rgba(0,0,0,0.4)]"
             >
               ▶️
             </button>
             <button
               id="stopButton"
-              class="bg-gray-800 text-white px-4 py-2 rounded"
+              class="bg-gray-800 text-white px-4 py-2 rounded border border-gray-600 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.6),_2px_2px_4px_rgba(0,0,0,0.4)] active:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.8)]"
             >
               ■
             </button>
           </div>
         </div>
       </div>
-      <div></div>
     </div>
     <script src="index.js"></script>
   </body>
