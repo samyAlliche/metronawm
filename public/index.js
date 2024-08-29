@@ -14,38 +14,50 @@ async function setRandomBackground() {
     console.error("Error fetching image:", error);
   }
 }
-
-// Call the function to set the background when the page loads
 window.onload = setRandomBackground;
 
 const bpmInput = document.getElementById("bpmInput");
 const startButton = document.getElementById("startButton");
 const stopButton = document.getElementById("stopButton");
+const changeSoundButton = document.getElementById("changeSound");
+const changeSoundInput = document.getElementById("tickSound");
 
 let intervalId;
 let audioContext;
 let tickCount = 0;
+let tickSoundId = 1;
 
 const playTickSound = () => {
   if (!audioContext) {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
   }
 
-  const oscillator = audioContext.createOscillator();
-  const gainNode = audioContext.createGain();
-
   const baseFrequency = 1000;
   const frequency = tickCount % 4 === 0 ? baseFrequency * 1.1 : baseFrequency;
 
-  oscillator.type = "sine";
-  oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-  gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+  if (tickSoundId === 2) {
+    const audio = new Audio("./sounds/hat.wav");
+    const audioLower = audio.cloneNode();
+    audioLower.playbackRate = p;
 
-  oscillator.connect(gainNode);
-  gainNode.connect(audioContext.destination);
+    audio.play();
+  } else if (tickSoundId === 3) {
+    const audio = new Audio("./sounds/rim.wav");
+    audio.play();
+  } else {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
 
-  oscillator.start();
-  oscillator.stop(audioContext.currentTime + 0.05);
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.05);
+  }
 
   tickCount++;
 };
@@ -78,6 +90,13 @@ const stopMetronome = () => {
     "cursor-not-allowed"
   );
   tickCount = 0;
+};
+
+const changeSound = () => {
+  if (tickSoundId >= 3) tickSoundId = 1;
+  else tickSoundId++;
+
+  changeSoundInput.value = tickSoundId;
 };
 
 // INCREASE AND DECREASE BPM
@@ -126,6 +145,7 @@ document.getElementById("decreaseBpm").addEventListener("mouseup", function () {
 });
 
 const increaseBpm = () => {
+  stopMetronome();
   let input = document.getElementById("bpmInput");
   if (parseInt(input.value) < parseInt(input.max)) {
     input.value = parseInt(input.value) + 1;
@@ -133,6 +153,7 @@ const increaseBpm = () => {
 };
 
 const decreaseBpm = () => {
+  stopMetronome();
   let input = document.getElementById("bpmInput");
   if (parseInt(input.value) > parseInt(input.min)) {
     input.value = parseInt(input.value) - 1;
@@ -143,3 +164,4 @@ const decreaseBpm = () => {
 
 startButton.addEventListener("click", startMetronome);
 stopButton.addEventListener("click", stopMetronome);
+changeSoundButton.addEventListener("click", changeSound);
