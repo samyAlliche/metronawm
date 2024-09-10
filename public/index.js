@@ -174,6 +174,7 @@ const increaseBpm = () => {
   let input = document.getElementById("bpmInput");
   if (parseInt(input.value) < parseInt(input.max)) {
     input.value = parseInt(input.value) + 1;
+    saveSettings();
   }
 };
 
@@ -182,6 +183,7 @@ const decreaseBpm = () => {
   let input = document.getElementById("bpmInput");
   if (parseInt(input.value) > parseInt(input.min)) {
     input.value = parseInt(input.value) - 1;
+    saveSettings();
   }
 };
 
